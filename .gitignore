@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Raw Kaggle data (not needed at runtime, too large for GitHub)
+USvideos.csv
+CAvideos.csv
+GBvideos.csv
+DEvideos.csv
+FRvideos.csv
+INvideos.csv
+JPvideos.csv
+KRvideos.csv
+MXvideos.csv
+RUvideos.csv
+UScomments.csv
+GBcomments.csv
+youtube_kaggle_processed.csv
+youtube_shorts_tiktok_trends_2025.csv_ML.csv
+DATA_DICTIONARY.csv
+feedback.csv
+
+# Environment
+.env
+venv/
+.venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+Thumbs.db
+.DS_Store
