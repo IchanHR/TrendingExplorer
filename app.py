@@ -22,16 +22,72 @@ st.set_page_config(
 # ── THEME-AWARE CSS ─────────────────────────────────────
 st.markdown("""
 <style>
-    /* ── Force dark background ── */
-    .stApp {
-        background-color: #0e1117;
-        color: #fafafa;
+    /* ═══════════════════════════════════════════
+       CSS VARIABLES — auto-switch dark/light
+       ═══════════════════════════════════════════ */
+
+    /* ── Dark mode (default) ── */
+    :root {
+        --bg-primary: #0e1117;
+        --bg-secondary: #161b22;
+        --bg-card: rgba(255,255,255,0.04);
+        --bg-card-hover: rgba(255,255,255,0.07);
+        --border-card: rgba(255,255,255,0.08);
+        --text-primary: #f3f4f6;
+        --text-secondary: #9ca3af;
+        --text-muted: #6b7280;
+        --chip-keyword-bg: rgba(167,139,250,0.15);
+        --chip-keyword-text: #c4b5fd;
+        --chip-keyword-border: rgba(167,139,250,0.3);
+        --chip-hook-bg: rgba(96,165,250,0.15);
+        --chip-hook-text: #93c5fd;
+        --chip-hook-border: rgba(96,165,250,0.3);
+        --chip-hashtag-bg: rgba(74,222,128,0.15);
+        --chip-hashtag-text: #86efac;
+        --chip-hashtag-border: rgba(74,222,128,0.3);
+        --insight-bg: linear-gradient(135deg, rgba(22,33,62,0.8), rgba(26,26,46,0.8));
+        --insight-border: rgba(167,139,250,0.2);
+        --factor-bg: rgba(255,255,255,0.04);
+        --model-score-bg: rgba(255,255,255,0.05);
+        --model-score-text: #d1d5db;
+        --section-border: rgba(167,139,250,0.3);
+        --sidebar-card-bg: rgba(255,255,255,0.05);
+        --sidebar-card-border: rgba(255,255,255,0.1);
+        --sidebar-best-bg: rgba(74,222,128,0.08);
     }
-    [data-testid="stSidebar"] {
-        background-color: #161b22;
-    }
-    [data-testid="stHeader"] {
-        background-color: #0e1117;
+
+    /* ── Light mode overrides ── */
+    [data-testid="stAppViewContainer"][data-theme="light"],
+    .stApp[data-theme="light"],
+    @media (prefers-color-scheme: light) {
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f9fa;
+            --bg-card: rgba(0,0,0,0.03);
+            --bg-card-hover: rgba(0,0,0,0.06);
+            --border-card: rgba(0,0,0,0.1);
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            --text-muted: #9ca3af;
+            --chip-keyword-bg: rgba(124,58,237,0.1);
+            --chip-keyword-text: #7c3aed;
+            --chip-keyword-border: rgba(124,58,237,0.25);
+            --chip-hook-bg: rgba(37,99,235,0.1);
+            --chip-hook-text: #2563eb;
+            --chip-hook-border: rgba(37,99,235,0.25);
+            --chip-hashtag-bg: rgba(22,163,74,0.1);
+            --chip-hashtag-text: #16a34a;
+            --chip-hashtag-border: rgba(22,163,74,0.25);
+            --insight-bg: linear-gradient(135deg, rgba(238,242,255,0.9), rgba(243,244,255,0.9));
+            --insight-border: rgba(124,58,237,0.2);
+            --factor-bg: rgba(0,0,0,0.03);
+            --model-score-bg: rgba(0,0,0,0.05);
+            --model-score-text: #374151;
+            --section-border: rgba(124,58,237,0.25);
+            --sidebar-card-bg: rgba(0,0,0,0.04);
+            --sidebar-card-border: rgba(0,0,0,0.1);
+            --sidebar-best-bg: rgba(74,222,128,0.1);
+        }
     }
 
     /* ── Typography ── */
@@ -43,7 +99,7 @@ st.markdown("""
         line-height: 1.2;
     }
     .subtitle {
-        color: #9ca3af; font-size: 1.05rem;
+        color: var(--text-secondary); font-size: 1.05rem;
         margin-bottom: 1.5rem; font-weight: 400;
     }
 
@@ -63,10 +119,10 @@ st.markdown("""
 
     /* ── Chips ── */
     .keyword-chip {
-        display: inline-block; background: rgba(167,139,250,0.15);
-        color: #c4b5fd; padding: 6px 14px; border-radius: 20px;
+        display: inline-block; background: var(--chip-keyword-bg);
+        color: var(--chip-keyword-text); padding: 6px 14px; border-radius: 20px;
         font-size: 0.82rem; margin: 3px; font-weight: 500;
-        border: 1px solid rgba(167,139,250,0.3);
+        border: 1px solid var(--chip-keyword-border);
     }
     .keyword-chip-top {
         display: inline-block;
@@ -76,65 +132,64 @@ st.markdown("""
         box-shadow: 0 2px 8px rgba(124,58,237,0.3);
     }
     .hook-chip {
-        display: inline-block; background: rgba(96,165,250,0.15);
-        color: #93c5fd; padding: 6px 14px; border-radius: 20px;
+        display: inline-block; background: var(--chip-hook-bg);
+        color: var(--chip-hook-text); padding: 6px 14px; border-radius: 20px;
         font-size: 0.82rem; margin: 3px; font-weight: 500;
-        border: 1px solid rgba(96,165,250,0.3);
+        border: 1px solid var(--chip-hook-border);
     }
     .hashtag-chip {
-        display: inline-block; background: rgba(74,222,128,0.15);
-        color: #86efac; padding: 6px 14px; border-radius: 20px;
+        display: inline-block; background: var(--chip-hashtag-bg);
+        color: var(--chip-hashtag-text); padding: 6px 14px; border-radius: 20px;
         font-size: 0.82rem; margin: 3px; font-weight: 500;
-        border: 1px solid rgba(74,222,128,0.3);
+        border: 1px solid var(--chip-hashtag-border);
     }
 
     /* ── Cards & Sections ── */
     .glass-card {
-        background: rgba(255,255,255,0.04);
-        border: 1px solid rgba(255,255,255,0.08);
+        background: var(--bg-card);
+        border: 1px solid var(--border-card);
         border-radius: 16px; padding: 1.2rem 1.5rem;
         margin-bottom: 1rem;
-        backdrop-filter: blur(10px);
     }
     .insight-box {
-        background: linear-gradient(135deg, rgba(22,33,62,0.8), rgba(26,26,46,0.8));
-        border: 1px solid rgba(167,139,250,0.2);
+        background: var(--insight-bg);
+        border: 1px solid var(--insight-border);
         border-radius: 12px; padding: 1rem 1.2rem; margin: 0.8rem 0;
-        color: #e5e7eb;
+        color: var(--text-primary);
     }
     .factor-item {
-        background: rgba(255,255,255,0.04);
+        background: var(--factor-bg);
         border-left: 3px solid #a78bfa;
         padding: 10px 16px; margin: 6px 0; border-radius: 0 8px 8px 0;
-        font-size: 0.9rem; color: #e5e7eb;
+        font-size: 0.9rem; color: var(--text-primary);
     }
     .section-header {
         font-size: 1.15rem; font-weight: 700;
-        color: #f3f4f6; margin: 1.5rem 0 0.5rem 0;
+        color: var(--text-primary); margin: 1.5rem 0 0.5rem 0;
         padding-bottom: 0.4rem;
-        border-bottom: 2px solid rgba(167,139,250,0.3);
+        border-bottom: 2px solid var(--section-border);
     }
     .section-desc {
-        font-size: 0.82rem; color: #9ca3af;
+        font-size: 0.82rem; color: var(--text-secondary);
         margin-bottom: 0.8rem; font-style: italic;
     }
 
     /* ── Sidebar ── */
     .sidebar-model-card {
-        background: rgba(255,255,255,0.05);
-        border: 1px solid rgba(255,255,255,0.1);
+        background: var(--sidebar-card-bg);
+        border: 1px solid var(--sidebar-card-border);
         border-radius: 10px; padding: 0.7rem 1rem;
         margin-bottom: 0.5rem;
     }
     .sidebar-model-card.best {
         border-color: #4ade80;
-        background: rgba(74,222,128,0.08);
+        background: var(--sidebar-best-bg);
     }
 
     /* ── Metric cards ── */
     .stat-card {
-        background: rgba(255,255,255,0.04);
-        border: 1px solid rgba(255,255,255,0.08);
+        background: var(--bg-card);
+        border: 1px solid var(--border-card);
         border-radius: 12px; padding: 1rem;
         text-align: center;
     }
@@ -144,33 +199,28 @@ st.markdown("""
         -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     }
     .stat-label {
-        font-size: 0.78rem; color: #9ca3af;
+        font-size: 0.78rem; color: var(--text-secondary);
         text-transform: uppercase; letter-spacing: 1px;
         margin-top: 0.3rem;
     }
 
     /* ── Prediction gauge ── */
-    .prob-display {
-        text-align: center; padding: 0.5rem 0;
-    }
-    .prob-number {
-        font-size: 2.5rem; font-weight: 800;
-        line-height: 1;
-    }
+    .prob-display { text-align: center; padding: 0.5rem 0; }
+    .prob-number { font-size: 2.5rem; font-weight: 800; line-height: 1; }
     .prob-label {
-        font-size: 0.75rem; color: #9ca3af;
+        font-size: 0.75rem; color: var(--text-secondary);
         margin-top: 0.3rem;
     }
     .model-score {
-        display: inline-block; background: rgba(255,255,255,0.05);
+        display: inline-block; background: var(--model-score-bg);
         border-radius: 8px; padding: 4px 10px; margin: 2px;
-        font-size: 0.78rem; color: #d1d5db;
+        font-size: 0.78rem; color: var(--model-score-text);
     }
 
     /* ── Home page cards ── */
     .feature-card {
-        background: rgba(255,255,255,0.04);
-        border: 1px solid rgba(255,255,255,0.08);
+        background: var(--bg-card);
+        border: 1px solid var(--border-card);
         border-radius: 16px; padding: 1.5rem;
         text-align: center;
         transition: border-color 0.2s;
@@ -178,17 +228,13 @@ st.markdown("""
     .feature-card:hover { border-color: rgba(167,139,250,0.4); }
     .feature-icon { font-size: 2rem; margin-bottom: 0.5rem; }
     .feature-title {
-        font-size: 1rem; font-weight: 700; color: #f3f4f6;
+        font-size: 1rem; font-weight: 700; color: var(--text-primary);
         margin-bottom: 0.3rem;
     }
-    .feature-desc { font-size: 0.82rem; color: #9ca3af; }
+    .feature-desc { font-size: 0.82rem; color: var(--text-secondary); }
 
     /* ── Progress bar ── */
     div[data-testid="stProgress"] > div { border-radius: 10px; }
-
-    /* ── Fix all text to white ── */
-    .stMarkdown, .stText, p, span, label, .stSelectbox label,
-    .stTextInput label, .stSlider label { color: #e5e7eb !important; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -220,7 +266,7 @@ with st.sidebar:
         is_best = name == best_model_name
         cls = "sidebar-model-card best" if is_best else "sidebar-model-card"
         star = " ⭐" if is_best else ""
-        color = "#4ade80" if is_best else "#d1d5db"
+        color = "#4ade80" if is_best else "var(--text-primary)"
         st.markdown(f"""
         <div class="{cls}">
             <div style="font-weight:600;color:{color};font-size:0.9rem">{name}{star}</div>
@@ -231,8 +277,8 @@ with st.sidebar:
     st.markdown("##### 📊 Dataset")
     st.markdown(f"""
     <div class="sidebar-model-card">
-        <div style="color:#9ca3af;font-size:0.8rem">Total Videos</div>
-        <div style="font-size:1.2rem;font-weight:700;color:#f3f4f6">{len(df):,}</div>
+        <div style="color:var(--text-secondary);font-size:0.8rem">Total Videos</div>
+        <div style="font-size:1.2rem;font-weight:700;color:var(--text-primary)">{len(df):,}</div>
     </div>
     """, unsafe_allow_html=True)
     st.caption("Platforms: TikTok & YouTube")
