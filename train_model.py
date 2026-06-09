@@ -115,9 +115,9 @@ print(f"      Train: {len(X_train):,}  |  Test: {len(X_test):,}")
 print("\n[5/6] Training 3 ML models...")
 
 models = {
-    "Logistic Regression": LogisticRegression(max_iter=1000, random_state=42),
-    "Random Forest"      : RandomForestClassifier(n_estimators=100, random_state=42, n_jobs=-1),
-    "SVM"                : SVC(probability=True, random_state=42, kernel="rbf"),
+    "Logistic Regression": LogisticRegression(max_iter=1000, random_state=42, class_weight="balanced"),
+    "Random Forest"      : RandomForestClassifier(n_estimators=100, random_state=42, n_jobs=-1, class_weight="balanced"),
+    "SVM"                : SVC(probability=True, random_state=42, kernel="rbf", class_weight="balanced"),
 }
 
 results   = {}
